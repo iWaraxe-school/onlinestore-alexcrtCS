@@ -22,4 +22,9 @@ public class Product {
     public double getPrice() {
         return price;
     }
+
+    @Override
+    public String toString() {
+        return  "\n\tName: " + getName() + ", Rate: " + getRate() + ", Price: " + getPrice();
+    }
 }

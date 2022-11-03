@@ -18,7 +18,7 @@ public class Store {
 
     public void printAllStoreProducts() {
         for (Category category : categories) {
-            category.printProductList();
+            System.out.println(category.toString());
         }
     }
 

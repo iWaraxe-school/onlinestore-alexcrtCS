@@ -16,15 +16,14 @@ public class Category {
         products.add(product);
     }
 
-    public void printProductList() {
-        System.out.println("\nCATEGORY: " + name);
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("\nCATEGORY: ").append(name);
         for (Product product : products) {
-            System.out.println(
-                    "\tName: " + product.getName() +
-                    ", Rate: " + product.getRate() +
-                    ", Price: " + product.getPrice()
-            );
+            builder.append(product.toString());
         }
+        return builder.toString();
     }
 
     public String getName() {
