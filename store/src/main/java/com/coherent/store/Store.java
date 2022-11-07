@@ -1,6 +1,7 @@
 package com.coherent.store;
 
 import com.coherent.domain.Category;
+import com.coherent.domain.Product;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,5 +25,13 @@ public class Store {
 
     public List<Category> getCategories() {
         return categories;
+    }
+
+    public List<Product> getProducts() {
+        List<Product> products = new ArrayList<>();
+        for (Category category : categories) {
+            products.addAll(category.getProducts());
+        }
+        return products;
     }
 }
