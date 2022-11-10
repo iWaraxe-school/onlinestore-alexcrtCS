@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class StoreApp {
     public static void main(String[] args) {
-        Store store = new Store();
+        Store store = Store.getInstance();
         RandomStorePopulator storePopulator = new RandomStorePopulator(store);
         Scanner scanner = new Scanner(System.in);
         ComparatorClass comparator = new ComparatorClass(store);
