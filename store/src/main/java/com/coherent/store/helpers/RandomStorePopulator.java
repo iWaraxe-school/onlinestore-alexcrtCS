@@ -38,11 +38,11 @@ public class RandomStorePopulator {
 
         for (Category category : categories) {
             for (int i = 0; i < 5; i++) {
-                Product newProduct = new Product(
-                        productCreator.getName(category.getName()),
-                        productCreator.getRate(),
-                        productCreator.getPrice()
-                );
+                Product newProduct = new Product.Builder()
+                        .name(productCreator.getName(category.getName()))
+                        .rate(productCreator.getRate())
+                        .price(productCreator.getPrice())
+                        .build();
                 category.addProduct(newProduct);
             }
             store.addCategory(category);
