@@ -9,8 +9,16 @@ import java.util.List;
 public class Store {
     private List<Category> categories;
 
-    public Store() {
+    private Store() {
         categories = new ArrayList<>();
+    }
+
+    private static class SingletonHelper {
+        private static final Store INSTANCE = new Store();
+    }
+
+    public static Store getInstance() {
+        return SingletonHelper.INSTANCE;
     }
 
     public void addCategory(Category category) {
