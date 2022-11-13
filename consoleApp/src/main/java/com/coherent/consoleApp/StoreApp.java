@@ -14,11 +14,11 @@ public class StoreApp {
         store.printAllStoreProducts();
 
         while (true) {
-            System.out.println("\nChoose an action:\n\t-> sort\n\t-> top\n\t-> quit");
+            System.out.println("\nChoose an action:\n\t-> sort\n\t-> top\n\t-> order\n\t-> quit");
             System.out.print("Action -> ");
             Action action = new Action(scanner.next(), store);
             ActionHandler actionChain = new QuitHandler();
-            actionChain.link(new SortingHandler()).link(new Top5Handler());
+            actionChain.link(new SortingHandler()).link(new OrderHandler()).link(new Top5Handler());
             actionChain.perform(action);
         }
     }
