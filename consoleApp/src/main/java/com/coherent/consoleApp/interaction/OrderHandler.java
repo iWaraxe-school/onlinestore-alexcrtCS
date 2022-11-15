@@ -5,6 +5,7 @@ import com.coherent.store.orderHandling.OrderCheckout;
 import com.coherent.store.orderHandling.OrderCreator;
 
 import java.util.Random;
+import java.util.Timer;
 
 public class OrderHandler extends ActionHandler {
     private String actualAction = "order";
@@ -14,8 +15,8 @@ public class OrderHandler extends ActionHandler {
         if (actualAction.equalsIgnoreCase(expectedAction.getAction())) {
             int numberOfProducts = expectedAction.getStore().getProducts().size();
             Random random = new Random();
-            OrderCheckout orderCheckout = new OrderCheckout();
-            new Thread(orderCheckout).start();
+            Timer timer = new Timer();
+            timer.schedule(new OrderCheckout(), 0, 12000);
             while (true) {
                 Product product = expectedAction.getStore().getProducts().get(random.nextInt(numberOfProducts));
                 OrderCreator orderCreator = new OrderCreator(product, random.nextInt(30) + 1);
