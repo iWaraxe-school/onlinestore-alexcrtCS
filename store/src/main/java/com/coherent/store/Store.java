@@ -4,10 +4,13 @@ import com.coherent.domain.Category;
 import com.coherent.domain.Product;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Store {
     private List<Category> categories;
+    // Creating list of products for order -> stored in threadsafe arraylist
+    public List<Product> orderProducts = Collections.synchronizedList(new ArrayList<>());
 
     private Store() {
         categories = new ArrayList<>();
