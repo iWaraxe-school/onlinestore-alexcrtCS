@@ -16,7 +16,7 @@ public class RandomStorePopulator {
         this.store = store;
     }
 
-    private static Set<Category> createCategories() {
+    public static Set<Category> createCategories() {
         Set<Category> categories = new HashSet<>();
         Reflections reflections = new Reflections("com.coherent.domain.category");
         Set<Class<? extends Category>> subTypes = reflections.getSubTypesOf(Category.class);
