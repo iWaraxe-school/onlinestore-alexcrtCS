@@ -4,13 +4,12 @@ import com.coherent.domain.Category;
 import com.coherent.domain.Product;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Store {
     private List<Category> categories;
-    // Creating list of products for order -> stored in threadsafe arraylist
-    public List<Product> orderProducts = Collections.synchronizedList(new ArrayList<>());
+    public List<Product> orderProducts = new CopyOnWriteArrayList<>();
 
     private Store() {
         categories = new ArrayList<>();
