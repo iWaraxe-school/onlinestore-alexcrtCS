@@ -8,6 +8,6 @@ public class OrderCheckout extends TimerTask {
     @Override
     public void run() {
         Store.getInstance().orderProducts.clear();
-        System.out.print("\nThread " + Thread.currentThread().getId() + ": order checkout successful!");
+        System.out.print("\nThread " + Thread.currentThread().getId() + ": order checkout successful!\n");
     }
 }
