@@ -3,14 +3,18 @@ package com.coherent.store.http;
 
 import com.coherent.domain.Product;
 import com.coherent.store.Store;
+import com.coherent.store.helpers.DBHelper;
 import com.google.gson.Gson;
 import io.restassured.response.Response;
+
+import java.util.List;
+import java.util.Random;
 
 import static io.restassured.RestAssured.given;
 
 public class Client {
     private static final Gson gson = new Gson();
-    Store store = Store.getInstance();
+    DBHelper db = DBHelper.getInstance();
 
     public void displayMain() {
         String response = given().auth()
@@ -43,8 +47,10 @@ public class Client {
     }
 
     public void orderProduct() {
-        if (!(store.getCategories().isEmpty() && store.getProducts().isEmpty())) {
-            Product randomProduct = store.getProducts().stream().findAny().get();
+        if (!db.getDBProducts().isEmpty()) {
+            Random random = new Random();
+            List<Product> products = db.getDBProducts();
+            Product randomProduct = products.get(random.nextInt(products.size()));
             String json = gson.toJson(randomProduct);
             Response response = given().auth().basic("admin","password")
                     .header("Content-type", "application/json")

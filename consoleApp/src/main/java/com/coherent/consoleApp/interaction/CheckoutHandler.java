@@ -11,7 +11,7 @@ public class CheckoutHandler extends ActionHandler {
         if (actualAction.equalsIgnoreCase(expectedAction.getAction())) {
             client.orderProduct();
         } else {
-            nextAction.perform(expectedAction);
+            System.out.println("Warning: Invalid Action. Try again...");
         }
     }
 }

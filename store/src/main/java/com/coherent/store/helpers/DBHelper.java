@@ -1,9 +1,12 @@
 package com.coherent.store.helpers;
 
 import com.coherent.domain.Category;
+import com.coherent.domain.Product;
 import com.coherent.store.Store;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -19,8 +22,16 @@ public class DBHelper {
     private static ResultSet RS1 = null;
     Store store;
 
-    public DBHelper(Store store) {
-        this.store = store;
+    private DBHelper() {
+        this.store = Store.getInstance();
+    }
+
+    private static class DBSingleton{
+        private static final DBHelper INSTANCE = new DBHelper();
+    }
+
+    public static DBHelper getInstance() {
+        return DBSingleton.INSTANCE;
     }
 
     public void accessStore() {
@@ -31,8 +42,8 @@ public class DBHelper {
         createProductsTable();
         populateStore();
         displayStore();
-        addProductsToCart();
-        displayShoppingCart();
+//        addProductsToCart();
+//        displayShoppingCart();
     }
 
     public void connectDB() {
@@ -202,6 +213,40 @@ public class DBHelper {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public List<Category> getDBCategories() {
+        List<Category> categories = new ArrayList<>();
+        String getCategories = "SELECT * FROM public.\"CATEGORIES\";";
+        try {
+            RS1 = STMT1.executeQuery(getCategories);
+            while (RS1.next()) {
+                Category category = new Category(RS1.getString("name"));
+                categories.add(category);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return categories;
+    }
+
+    public List<Product> getDBProducts() {
+        List<Product> products = new ArrayList<>();
+        String getProducts = "SELECT * FROM public.\"PRODUCTS\";";
+        try {
+            RS1 = STMT1.executeQuery(getProducts);
+            while (RS1.next()) {
+                Product product = new Product.Builder()
+                        .name(RS1.getString("name"))
+                        .rate(RS1.getDouble("rate"))
+                        .price(RS1.getDouble("price"))
+                        .build();
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return products;
     }
 
     public void displayStore() {
