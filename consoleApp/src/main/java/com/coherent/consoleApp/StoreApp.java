@@ -2,7 +2,7 @@ package com.coherent.consoleApp;
 
 import com.coherent.consoleApp.interaction.*;
 import com.coherent.store.Store;
-import com.coherent.store.helpers.RandomStorePopulator;
+import com.coherent.store.helpers.DBHelper;
 import com.coherent.store.http.Server;
 
 import java.io.IOException;
@@ -11,24 +11,20 @@ import java.util.Scanner;
 public class StoreApp {
     public static void main(String[] args) {
         Store store = Store.getInstance();
-        RandomStorePopulator storePopulator = new RandomStorePopulator(store);
-        Scanner scanner = new Scanner(System.in);
-        storePopulator.addProductsToCategories();
-        store.printAllStoreProducts();
-
+        DBHelper db = DBHelper.getInstance();
         Server server = Server.getInstance();
+        Scanner scanner = new Scanner(System.in);
+        db.accessStore();
+
         try {
             server.startServer();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        // Re-instated & Updated Store Interaction from Previous Tasks
+        // Store Interaction with only commands interacting with Server & DB
         while (true) {
             System.out.println("\nChoose an action:" +
-                    "\n\t-> sort" +
-                    "\n\t-> top" +
-                    "\n\t-> order" +
                     "\n\t-> categories" +
                     "\n\t-> products" +
                     "\n\t-> checkout" +
@@ -38,10 +34,7 @@ public class StoreApp {
             ActionHandler actionChain = new QuitHandler();
             actionChain.link(new GetCategoryHandler())
                     .link(new GetProductsHandler())
-                    .link(new CheckoutHandler())
-                    .link(new SortingHandler())
-                    .link(new OrderHandler())
-                    .link(new Top5Handler());
+                    .link(new CheckoutHandler());
             actionChain.perform(action);
         }
     }
